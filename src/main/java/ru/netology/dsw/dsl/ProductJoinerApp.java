@@ -52,6 +52,11 @@ public class ProductJoinerApp {
                 latch.countDown();
             }
         });
+        kafkaStreams.setUncaughtExceptionHandler((thread, ex) -> {
+            ex.printStackTrace();
+            kafkaStreams.close();
+            latch.countDown();
+        });
 
         try {
             kafkaStreams.start();
